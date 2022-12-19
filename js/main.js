@@ -3,6 +3,7 @@ var elList = document.querySelector(".js-list");
 var elForm = document.querySelector(".js-form");
 var elInput = document.querySelector(".js-input");
 var elSelect = document.querySelector(".js-select");
+var elSortSelect = document.querySelector(".js-sort-select");
 
 function createCardListItem(array, node) {
   elList.innerHTML = "";
@@ -36,6 +37,23 @@ function createCardListItem(array, node) {
       </ul>
       <p>${item.overview.split(" ").splice(0, 20).join(" ")}</p>`;
   }
+}
+
+function sortArray(arr, key, reverse) {
+  return arr.sort((a, b) => {
+    if (typeof a[key] === "number") {
+      a = a[key];
+      b = b[key];
+      if (reverse) return b - a;
+      return a - b;
+    }
+    if (typeof a[key] === "string") {
+      a = a[key].toLowerCase().charCodeAt(0);
+      b = b[key].toLowerCase().charCodeAt(0);
+      if (reverse) return b - a;
+      return a - b;
+    }
+  });
 }
 
 createCardListItem(films, elList);
@@ -74,6 +92,23 @@ elSelect.addEventListener("change", (evt) => {
   });
 
   createCardListItem(sortfilms, elList);
+});
+
+elSortSelect.addEventListener("change", (evt) => {
+  evt.preventDefault();
+
+  var elSortSelectVal = elSortSelect.value;
+
+  if (elSortSelectVal !== "all") {
+    if (elSortSelectVal === "a-z")
+      createCardListItem(sortArray(films, "title"), elList);
+    if (elSortSelectVal === "z-a")
+      createCardListItem(sortArray(films, "title", true), elList);
+    if (elSortSelectVal === "0-9")
+      createCardListItem(sortArray(films, "id"), elList);
+    if (elSortSelectVal === "9-0")
+      createCardListItem(sortArray(films, "id", true), elList);
+  }
 });
 
 let searchfilms = [];

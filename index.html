@@ -14,17 +14,24 @@
     <div class="container">
       <div class="d-flex">
         <div class="ms-auto">
-          <select class="form-select my-3 js-select text-bg-danger mt-4">
-            <option value="All">All</option>
-          </select>
           <form class="js-form" method="post">
+            <select class="form-select my-3 js-select text-bg-danger mt-4">
+              <option value="All">All</option>
+            </select>
+            <select class="form-select bg-primary text-white js-sort-select">
+              <option value="all">All</option>
+              <option value="a-z">A-Z</option>
+              <option value="z-a">Z-A</option>
+              <option value="0-9">ID: 0-9</option>
+              <option value="9-0">ID: 9-0</option>
+            </select>
             <input
-              class="btn fs-6 bg-white text-danger js-input"
+              class="btn mt-3 fs-6 bg-white text-danger js-input"
               type="search"
               placeholder="Search film"
               autofocus
             />
-            <button class="btn btn-primary" type="button">Search</button>
+            <button class="btn mt-3 btn-primary" type="button">Search</button>
           </form>
         </div>
       </div>
