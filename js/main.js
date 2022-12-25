@@ -4,6 +4,39 @@ var elForm = document.querySelector(".js-form");
 var elInput = document.querySelector(".js-input");
 var elSelect = document.querySelector(".js-select");
 var elSortSelect = document.querySelector(".js-sort-select");
+let elModeBtn = document.querySelector(".js-mode");
+let elScrollBtn = document.querySelector(".js-scroll");
+
+let theme = false;
+let favoriteImgClick = false;
+
+elModeBtn.addEventListener("click", () => {
+  theme = !theme;
+
+  let bg = theme ? "dark" : "light";
+  localStorage.setItem("theme", bg);
+  changeTheme();
+});
+
+changeTheme();
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY >= 700) {
+    elScrollBtn.classList.remove("d-none");
+  } else {
+    elScrollBtn.classList.add("d-none");
+  }
+});
+
+function changeTheme() {
+  if (localStorage.getItem("theme") === "dark") {
+    document.querySelector("body").classList.add("dark");
+    elModeBtn.children[0].src = "./images/mode-icon.png";
+  } else {
+    document.querySelector("body").classList.remove("dark");
+    elModeBtn.children[0].src = "./images/mode-icon-dark.png";
+  }
+}
 
 function createCardListItem(array, node) {
   elList.innerHTML = "";
@@ -12,13 +45,10 @@ function createCardListItem(array, node) {
     var newItemLi = document.createElement("li");
 
     node.appendChild(newItemLi);
-
-    newItemLi.classList.add("col-12");
-    newItemLi.classList.add("col-md-6");
-    newItemLi.classList.add("col-lg-3");
-    newItemLi.classList.add("rounded");
-    newItemLi.classList.add("shadow");
-    newItemLi.classList.add("p-3");
+    newItemLi.setAttribute(
+      "class",
+      "col-12 col-md-4 col-lg-3 shadow p-3 rounded"
+    );
 
     newItemLi.innerHTML = `<div class="d-flex justify-content-between">
     <h2 class="h3 text-center" style="color: #${Math.floor(
@@ -33,9 +63,12 @@ function createCardListItem(array, node) {
       />
       </div>
       <ul class="mb-3">
-        <li>${item.genres[0]}</li>
+        <li class="text-danger">${item.genres[0]}</li>
       </ul>
-      <p>${item.overview.split(" ").splice(0, 20).join(" ")}</p>`;
+      <p class="text-primary">${item.overview
+        .split(" ")
+        .splice(0, 20)
+        .join(" ")}...</p>`;
   }
 }
 
